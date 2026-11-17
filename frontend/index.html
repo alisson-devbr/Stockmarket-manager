@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sistema de gerenciamento de estoque de supermercado.">
+  <title>StockMarket Manager</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">S</span><div><b>StockMarket</b><small>MANAGER</small></div></div>
+    <nav><a class="active" href="#dashboard">Visão geral</a><a href="#products">Produtos</a><a href="#movements">Movimentações</a></nav>
+    <div class="side-note"><b>Controle de estoque</b><p>Organização simples para a rotina do mercado.</p></div>
+  </aside>
+  <main>
+    <header class="topbar"><div><small>GESTÃO DE ESTOQUE</small><h1>Visão geral</h1></div><span class="system-status">● Sistema local</span></header>
+    <section id="dashboard" class="stats">
+      <article><span>Produtos cadastrados</span><strong id="totalProducts">—</strong><small>Itens diferentes</small></article>
+      <article><span>Unidades em estoque</span><strong id="totalUnits">—</strong><small>Quantidade total</small></article>
+      <article class="warning"><span>Estoque baixo</span><strong id="lowStock">—</strong><small>No mínimo ou abaixo</small></article>
+      <article><span>Valor de custo estimado</span><strong id="stockValue">—</strong><small>Com base no custo cadastrado</small></article>
+    </section>
+    <section id="products" class="panel">
+      <div class="section-head"><div><small>CATÁLOGO</small><h2>Produtos</h2></div><button id="newProduct">+ Novo produto</button></div>
+      <div class="toolbar"><input id="search" type="search" placeholder="Pesquisar por nome, SKU ou categoria..."><span id="productCount"></span></div>
+      <div class="table-wrap"><table><thead><tr><th>Produto</th><th>SKU</th><th>Categoria</th><th>Preço de venda</th><th>Quantidade</th><th>Status</th><th>Ações</th></tr></thead><tbody id="productsTable"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div>
+    </section>
+    <section id="movements" class="panel"><div class="section-head"><div><small>HISTÓRICO</small><h2>Movimentações recentes</h2></div></div><div id="recentMovements" class="movement-list">Carregando...</div></section>
+    <footer>StockMarket Manager · Projeto de estudo e portfólio</footer>
+  </main>
+</div>
+
+<dialog id="productDialog">
+  <form id="productForm">
+    <div class="dialog-head"><div><small>CADASTRO</small><h2 id="dialogTitle">Novo produto</h2></div><button type="button" class="close" id="closeProduct">×</button></div>
+    <input type="hidden" id="productId">
+    <label>Nome do produto<input id="name" required maxlength="120" placeholder="Ex.: Arroz tipo 1 5kg"></label>
+    <div class="form-grid">
+      <label>SKU / Código<input id="sku" required maxlength="40" placeholder="MER-001"></label>
+      <label>Categoria<input id="category" required maxlength="80" placeholder="Mercearia"></label>
+      <label>Preço de custo<input id="costPrice" required type="number" min="0" step="0.01"></label>
+      <label>Preço de venda<input id="salePrice" required type="number" min="0" step="0.01"></label>
+      <label>Quantidade inicial<input id="quantity" required type="number" min="0" step="1" value="0"></label>
+      <label>Estoque mínimo<input id="minQuantity" required type="number" min="0" step="1" value="5"></label>
+    </div>
+    <p id="formMessage" class="error"></p>
+    <div class="dialog-actions"><button type="button" class="secondary" id="cancelProduct">Cancelar</button><button type="submit">Salvar produto</button></div>
+  </form>
+</dialog>
+
+<dialog id="movementDialog">
+  <form id="movementForm">
+    <div class="dialog-head"><div><small>ESTOQUE</small><h2>Registrar movimentação</h2></div><button type="button" class="close" id="closeMovement">×</button></div>
+    <input type="hidden" id="movementProductId">
+    <p id="movementProductName" class="hint"></p>
+    <label>Tipo<select id="movementType"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></label>
+    <label>Quantidade<input id="movementQuantity" type="number" min="1" step="1" required></label>
+    <label>Observação<input id="movementNote" maxlength="255" placeholder="Ex.: Reposição de mercadoria"></label>
+    <p id="movementMessage" class="error"></p>
+    <div class="dialog-actions"><button type="button" class="secondary" id="cancelMovement">Cancelar</button><button type="submit">Registrar</button></div>
+  </form>
+</dialog>
+<div id="toast" role="status"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
